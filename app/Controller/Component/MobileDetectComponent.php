@@ -50,13 +50,13 @@ class MobileDetectComponent extends Component {
 	public function detect($method = 'isMobile', $args = null) {
 		if (!class_exists('Mobile_Detect')) {
 			// load the vendor class if it hasn't allready been autoloaded.
-			// App::import('Vendor', 'jsmin', array('file' => 'jsmin/jsmin.php'));
+			App::import('Vendor', 'jsmin', array('file' => 'jsmin/jsmin.php'));
 			$loaded = App::import('Vendor', 'MobileDetect', array(
 				'file' => 'MobileDetect' . DS . 'Mobile_Detect.php')
 			);
 			// abort if vendor class wasn't autoloaded and can't be found.
 			if (!$loaded) {
-				throw new CakeException('Mobile_Detect está ausente ou não pode ser carregado.');
+				throw new CakeException('Mobile_Detect vendor class cant be found.');
 			}
 		}
 		// instantiate once per method call
