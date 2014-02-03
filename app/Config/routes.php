@@ -29,7 +29,7 @@
 	   Router::connect('/', array('controller' => 'users', 'action' => 'login'));
 	}
 
-	Router::connect('/home', array('controller' => 'pages', 'action' => 'index'));
+	Router::connect('/home', array('controller' => 'projects', 'action' => 'index'));
 
 	/* Profile page */
 	Router::connect('/me', array('controller' => 'users', 'action' => 'profile'));

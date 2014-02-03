@@ -56,7 +56,7 @@ class PagesController extends AppController {
 	{
 		parent::beforeFilter();
 
-		$this->Auth->allow('home');
+		//$this->Auth->allow('home');
 	}
 /**
  * Displays a view

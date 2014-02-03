@@ -13,8 +13,10 @@
 					<th><?php echo __('Username'); ?></th>
 					<th><?php echo __('Password'); ?></th>
 					<th><?php echo __('Url'); ?></th>
-					<th><?php echo __('Notes'); ?></th>
-					<th class="actions"><?php echo __('Actions'); ?></th>
+					<th><?php echo __('Details'); ?></th>
+					<?php if (AuthComponent::user('role') == 'admin') {?>
+						<th class="actions"><?php echo __('Actions'); ?></th>
+					<?php } ?>
 				</tr>
 				<?php foreach ($project['ProjectItem'] as $projectItem): ?>
 					<tr>
@@ -22,18 +24,25 @@
 						<td><?php echo $projectItem['username']; ?></td>
 						<td><?php echo $projectItem['password']; ?></td>
 						<td><?php echo $projectItem['url']; ?></td>
-						<td><?php echo $projectItem['notes']; ?></td>
-						<td class="actions">
-							<?php echo $this->Html->link(__('Details'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
-							<?php if (AuthComponent::user('role') == 'admin') {?>
-							<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?>
-							<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'project_items', 'action' => 'delete', $projectItem['id']), null, __('Are you sure you want to delete # %s?', $projectItem['id'])); ?>
-							<?php } ?>
-						</td>
+						<td><?php if (!empty($projectItem['notes'])): ?><?php echo $this->Html->link(__('Note'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?><?php endif; ?></td>
+						<?php if (AuthComponent::user('role') == 'admin') {?>
+							<td class="actions">
+								<?php //echo $this->Html->link(__('Details'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
+								<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?>
+								<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'project_items', 'action' => 'delete', $projectItem['id']), null, __('Are you sure you want to delete # %s?', $projectItem['id'])); ?>
+							</td>
+						<?php } ?>
 					</tr>
 				<?php endforeach; ?>
 				</table>
 		</div>
 	</div>
+<?php endif; ?>
+
+<?php if (!empty($project['Project']['notes'])): ?>
+<div class="projects view">
+<h3>Notes:</h3>
+<?php echo $project['Project']['notes']; ?>
+</div>
 <?php endif; ?>
 

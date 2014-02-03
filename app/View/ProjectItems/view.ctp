@@ -25,5 +25,3 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 	<strong>Notes: </strong><?php echo $projectItem['ProjectItem']['notes'] ?>
   </div>
 </div>
-
-
