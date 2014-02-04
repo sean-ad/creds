@@ -29,8 +29,8 @@
 				<td><?php echo h($project['Project']['id']); ?>&nbsp;</td>
 				<td><?php echo h($project['Project']['name']); ?>&nbsp;</td>
 				<td class="actions">
-					<?php echo $this->Html->link(__('View'), array('action' => 'view', $project['Project']['id'])); ?>
-					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $project['Project']['id'])); ?>
+					<?php echo $this->Html->link(__('View'), array('action' => 'view', $project['Project']['id'])); ?> |
+					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $project['Project']['id'])); ?> |
 					<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $project['Project']['id']), null, __('Are you sure you want to delete # %s?', $project['Project']['id'])); ?>
 				</td>
 			</tr>
