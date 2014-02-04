@@ -37,7 +37,14 @@ class AppController extends Controller
   public $isMobile = false;
   public $isTablet = false;
 
+  // Controller-specific
   public $components = array('Auth','Session','Error','Cookie','MobileDetect', "Acl");
+  // Application-global
+  // public $components = array('Auth' => array(
+  //                                                   'authorize' => array(
+  //                                                       'Actions' => array('actionPath' => 'controllers')
+  //                                                   )
+  //                                               ),'Session','Error','Cookie','MobileDetect', "Acl");
   public $uses = array('User');
   public $helpers = array('CakeStrap' => array('className' => 'CakeStrapHtml'),
                           'Form' => array('className' => 'CakeStrapForm'));
@@ -51,7 +58,7 @@ class AppController extends Controller
 
     $this->Auth->authenticate = array('Form');
 
-    $this->Auth->loginRedirect = array('controller'=>'pages','action'=>'index');
+    $this->Auth->loginRedirect = array('controller'=>'projects','action'=>'index');
     $this->Auth->logoutRedirect = array('action' => 'login', 'controller' => 'users');
     $this->Auth->authError = 'You are not allowed to see that.';
 

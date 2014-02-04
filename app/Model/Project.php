@@ -39,26 +39,4 @@ class Project extends AppModel {
 		)
 	);
 
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array(
-		'Team' => array(
-			'className' => 'Team',
-			'joinTable' => 'teams_projects',
-			'foreignKey' => 'project_id',
-			'associationForeignKey' => 'team_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		)
-	);
-
 }

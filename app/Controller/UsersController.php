@@ -1,5 +1,12 @@
 <?php
 class UsersController extends AppController {
+
+	public $actsAs = array('Acl' => array('type' => 'requester'));
+
+	public function parentNode() {
+	    return null;
+	}
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('add', 'logout', 'change_password', 'remember_password', 'remember_password_step_2');

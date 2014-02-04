@@ -8,6 +8,12 @@ App::uses('AppController', 'Controller');
  */
 class ProjectsController extends AppController {
 
+	//  Integrate with ACLs
+	public $actsAs = array('Acl' => array('type' => 'controlled'));
+	public function parentNode() {
+    		return null;
+	}
+
 /**
  * Components
  *
@@ -17,7 +23,8 @@ class ProjectsController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		//$this->Auth->allow('index');
+		// turn off auth
+		//$this->Auth->allow();
 	}
 
 /**
@@ -28,8 +35,18 @@ class ProjectsController extends AppController {
 	public function index() {
 		// TODO:
 		// Only retrieve the projects they have permission to view anyway
-		$this->Project->recursive = 0;
-		$this->set('projects', $this->Paginator->paginate());
+		// Right now doing this in the view
+		// $this->Project->recursive = 0;
+		// $this->set('projects', $this->Paginator->paginate());
+		//
+		// Use the Acl Behavior
+		    $this->Paginator->settings = array(
+		        // 'conditions' => array('Recipe.title LIKE' => 'a%'),
+		        'limit' => 10
+		    );
+		    $this->Project->recursive = 0;
+		    $projects = $this->Paginator->paginate();
+		    $this->set(compact('projects'));
 	}
 
 /**
@@ -86,9 +103,9 @@ class ProjectsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (AuthComponent::user('role') != 'admin') {
-			throw new ForbiddenException("You don't have permission to edit projects.");
-		}
+		// if (AuthComponent::user('role') != 'admin') {
+		// 	throw new ForbiddenException("You don't have permission to edit projects.");
+		// }
 		if (!$this->Project->exists($id)) {
 			throw new NotFoundException(__('Invalid project'));
 		}
@@ -103,8 +120,6 @@ class ProjectsController extends AppController {
 			$options = array('conditions' => array('Project.' . $this->Project->primaryKey => $id));
 			$this->request->data = $this->Project->find('first', $options);
 		}
-		$teams = $this->Project->Team->find('list');
-		$this->set(compact('teams'));
 	}
 
 /**
