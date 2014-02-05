@@ -230,7 +230,9 @@ class UsersController extends AppController {
 					->send();
 
 			$this->Session->setFlash('Check your e-mail to continue the process of recovering password.', 'flash_success');
-
+			$this->set('submitted', TRUE);
+		} else {
+			$this->set('submitted', FALSE);
 		}
 	}
 

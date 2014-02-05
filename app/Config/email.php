@@ -47,7 +47,7 @@ class EmailConfig {
     'from' => 'person@place.com',
     //'charset' => 'utf-8',
     //'headerCharset' => 'utf-8',
-    'log'=>TRUE
+    //'log'=>TRUE
     );
 
   public $smtp = array(

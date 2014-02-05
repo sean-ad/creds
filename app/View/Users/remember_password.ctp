@@ -1,3 +1,4 @@
+<?php if (!($submitted)) { ?>
 <div class="row">
 	<div class="col-lg-12">
 	<?php echo $this->Form->create('User',array('url' => array(
@@ -14,3 +15,4 @@
 		<?php echo $this->Form->end(__('Next step'),array('class' => 'btn-lg'));?>
 	</div>
 </div>
+<?php } ?>
