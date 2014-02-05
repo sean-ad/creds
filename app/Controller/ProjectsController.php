@@ -91,7 +91,6 @@ class ProjectsController extends AppController {
 				$this->Session->setFlash(__('The project could not be saved. Please, try again.'));
 			}
 		}
-		$teams = $this->Project->Team->find('list');
 		$this->set(compact('teams'));
 	}
 
