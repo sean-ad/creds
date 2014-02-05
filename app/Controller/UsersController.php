@@ -186,7 +186,7 @@ class UsersController extends AppController {
 
 				if ($this->User->save($this->request->data)) {
 					$this->Session->setFlash('Password updated successfully!', 'flash_success');
-					$this->redirect(array('/home'));
+					$this->redirect(array('/'));
 				}
 			} else {
 				$this->Session->setFlash('Passwords do not match.', 'flash_fail');
