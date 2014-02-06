@@ -4,7 +4,10 @@ App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel
 {
   public $name = 'User';
-
+  public $actsAs = array('Acl' => array('type' => 'requester'));
+  public function parentNode() {
+      return null;
+  }
   public function beforeSave($options = array())
   {
     if (isset($this->data[$this->alias]['password']) && !empty($this->data[$this->alias]['password']))

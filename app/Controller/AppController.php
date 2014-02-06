@@ -38,13 +38,20 @@ class AppController extends Controller
   public $isTablet = false;
 
   // Controller-specific
-  public $components = array('Auth','Session','Error','Cookie','MobileDetect', "Acl");
+  //public $components = array('Auth','Session','Error','Cookie','MobileDetect', "Acl");
   // Application-global
-  // public $components = array('Auth' => array(
-  //                                                   'authorize' => array(
-  //                                                       'Actions' => array('actionPath' => 'controllers')
-  //                                                   )
-  //                                               ),'Session','Error','Cookie','MobileDetect', "Acl");
+  public $components = array(
+        'Auth' => array(
+            'authorize' => array(
+                'Actions' => array('actionPath' => 'controllers')
+                )
+            ),
+            'Session',
+            'Error',
+            'Cookie',
+            'MobileDetect',
+            "Acl"
+        );
   public $uses = array('User');
   public $helpers = array('CakeStrap' => array('className' => 'CakeStrapHtml'),
                           'Form' => array('className' => 'CakeStrapForm'));

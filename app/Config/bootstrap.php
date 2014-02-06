@@ -123,7 +123,9 @@ Cache::config('default', array('engine' => 'File'));
  * ));
  *
  */
-
+// App::build(array(
+// 	'Plugin'                    => array('/app/Plugin'),
+//  ));
 /**
  * Custom Inflector rules, can be set to correctly pluralize or singularize table, model, controller names or whatever other
  * string is passed to the inflection functions
@@ -148,6 +150,10 @@ Cache::config('default', array('engine' => 'File'));
     'routes' => true
     )));*/
 
+//CakePlugin::load('Install', array('routes' => true));
+CakePlugin::load('AclExtras');
+// CakePlugin::loadAll();
+
 if (!Configure::read('Application.status')) {
 	Configure::write(
 		'Application', array(
@@ -155,7 +161,6 @@ if (!Configure::read('Application.status')) {
 			'status'=> 0,
 		)
 	);
-	CakePlugin::load('Install', array('routes' => true));
 }
 
 /**

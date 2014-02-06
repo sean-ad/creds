@@ -8,12 +8,6 @@ App::uses('AppController', 'Controller');
  */
 class ProjectsController extends AppController {
 
-	//  Integrate with ACLs
-	public $actsAs = array('Acl' => array('type' => 'controlled'));
-	public function parentNode() {
-    		return null;
-	}
-
 /**
  * Components
  *
@@ -34,19 +28,25 @@ class ProjectsController extends AppController {
  */
 	public function index() {
 		// TODO:
-		// Only retrieve the projects they have permission to view anyway
-		// Right now doing this in the view
+		// Only retrieve the projects they have permission to view anyway, and paginate.
+		// Original paginated view saved as index_paginated.
+		// Wish this could be done in the model but then we don't have
+		// access to the Acl or Auth components.
+		//
+		// Original
 		// $this->Project->recursive = 0;
 		// $this->set('projects', $this->Paginator->paginate());
 		//
-		// Use the Acl Behavior
-		    $this->Paginator->settings = array(
-		        // 'conditions' => array('Recipe.title LIKE' => 'a%'),
-		        'limit' => 10
-		    );
-		    $this->Project->recursive = 0;
-		    $projects = $this->Paginator->paginate();
-		    $this->set(compact('projects'));
+		$this->Project->recursive = 0;
+		$projects = $this->Project->find('all');
+		// we only want to display the allowed projects
+		$allowed_projects = array();
+		foreach ($projects as $project){
+			if ($this->Acl->check(array('User' => array('id' => $this->Auth->user('id'))), $project['Project']['name'], 'read')){
+				$allowed_projects[] = $project;
+			}
+		}
+		$this->set('projects', $allowed_projects);
 	}
 
 /**

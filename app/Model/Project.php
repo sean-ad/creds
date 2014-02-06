@@ -14,6 +14,8 @@ class Project extends AppModel {
  * @var string
  */
 	public $displayField = 'name';
+	// to integrate with acl checks on projects
+	public $findMethods = array('available' =>  true);
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -38,5 +40,4 @@ class Project extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-
 }
