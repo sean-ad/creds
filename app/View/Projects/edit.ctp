@@ -5,9 +5,6 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
-		echo $this->Form->input('created_at');
-		echo $this->Form->input('updated_at');
-		echo $this->Form->input('Team');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -18,9 +15,7 @@
 
 		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Project.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Project.id'))); ?></li>
 		<li><?php echo $this->Html->link(__('List Projects'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Project Items'), array('controller' => 'project_items', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Project Item'), array('controller' => 'project_items', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Teams'), array('controller' => 'teams', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Team'), array('controller' => 'teams', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Credentials'), array('controller' => 'project_items', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Username/Password'), array('controller' => 'project_items', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

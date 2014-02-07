@@ -1,9 +1,21 @@
-<div class="projects view">
-<h2><?php echo h($project['Project']['name']); ?></h2>
-</div>
+<?php
+$breadcrumb = array(
+	array(
+		'label' => 'Projects',
+		'link'	=> '/projects/index'
+	),
+	array(
+		'label'	=> $project['Project']['name']
+	)
+);
+echo $this->element('breadcrumb',array('links' => $breadcrumb));
+?>
+
+<h3><?php echo h($project['Project']['name']); ?></h3>
+<hr>
 
 <div class="related">
-	<h3><?php echo __('Credentials:'); ?></h3>
+	<h4><?php echo __('Credentials:'); ?></h4>
 	<?php if (!empty($project['ProjectItem'])): ?>
 	<div class='row'>
 		<div class="col-12">
@@ -41,7 +53,7 @@
 
 <?php if (!empty($project['Project']['notes'])): ?>
 <div class="projects view">
-<h3>Notes:</h3>
+<h4>Notes:</h4>
 <?php echo $project['Project']['notes']; ?>
 </div>
 <?php endif; ?>
