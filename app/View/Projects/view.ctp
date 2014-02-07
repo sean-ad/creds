@@ -24,7 +24,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 					<th><?php echo __('Name'); ?></th>
 					<th><?php echo __('Username'); ?></th>
 					<th><?php echo __('Password'); ?></th>
-					<th><?php echo __('Url'); ?></th>
+					<th><?php echo __('Url/Server'); ?></th>
 					<th><?php echo __('Details'); ?></th>
 					<?php if (AuthComponent::user('role') == 'admin') {?>
 						<th class="actions"><?php echo __('Actions'); ?></th>
