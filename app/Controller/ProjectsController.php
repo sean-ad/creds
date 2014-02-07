@@ -18,7 +18,7 @@ class ProjectsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		// turn off auth
-		//$this->Auth->allow();
+		$this->Auth->allow();
 	}
 
 /**
