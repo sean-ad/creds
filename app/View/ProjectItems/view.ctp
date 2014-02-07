@@ -21,7 +21,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
     <h4 class="media-heading"><?php echo $projectItem['ProjectItem']['name'] ?></h4>
  	<strong>Username: </strong><?php echo $projectItem['ProjectItem']['username']?><br/>
 	<strong>Password: </strong><?php echo $projectItem['ProjectItem']['password'] ?><br />
-	<strong>URL: </strong><?php echo $projectItem['ProjectItem']['url'] ?><br />
+	<strong>URL/Server: </strong><?php echo $projectItem['ProjectItem']['url'] ?><br />
 	<strong>Notes: </strong><?php echo $projectItem['ProjectItem']['notes'] ?>
   </div>
 </div>
