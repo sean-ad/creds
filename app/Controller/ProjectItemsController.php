@@ -50,7 +50,10 @@ class ProjectItemsController extends AppController {
 		$options = array('conditions' => array('ProjectItem.' . $this->ProjectItem->primaryKey => $id));
 		$projectItem = $this->ProjectItem->find('first', $options);
 		if (!($this->Acl->check(array('User' => array('id' => $this->Auth->user('id'))), $projectItem['Project']['name'], 'read'))){
-			throw new ForbiddenException("You don't have permission to view that project.");
+			//throw new ForbiddenException("You don't have permission to view that project.");
+			CakeLog::info('The user '.AuthComponent::user('username').' (ID: '.AuthComponent::user('id').') tried to view the '.  $projectItem['Project']['name'] .' project: (ID: '.$projectItem['Project']['id'].')','users');
+			$this->Session->setFlash(__('The project could not be viewed.', 'flash_fail'));
+			$this->redirect(array('action' => 'index'));
 		} else {
 			$this->set('projectItem', $projectItem);
 		}

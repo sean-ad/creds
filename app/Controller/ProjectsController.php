@@ -18,7 +18,7 @@ class ProjectsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		// turn off auth
-		$this->Auth->allow();
+		//$this->Auth->allow();
 	}
 
 /**
@@ -67,7 +67,9 @@ class ProjectsController extends AppController {
 		$options = array('conditions' => array('Project.' . $this->Project->primaryKey => $id));
 		$project = $this->Project->find('first', $options);
 		if (!($this->Acl->check(array('User' => array('id' => $this->Auth->user('id'))), $project['Project']['name'], 'read'))){
-			throw new ForbiddenException("You don't have permission to view that project.");
+			CakeLog::info('The user '.AuthComponent::user('username').' (ID: '.AuthComponent::user('id').') tried to view the '.  $project['Project']['name'] .' project: (ID: '.$project['Project']['id'].')','users');
+			$this->Session->setFlash(__('The project could not be viewed.', 'flash_fail'));
+			$this->redirect(array('action' => 'index'));
 		} else {
 			$this->set('project', $project);
 		}
@@ -102,9 +104,12 @@ class ProjectsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		// if (AuthComponent::user('role') != 'admin') {
-		// 	throw new ForbiddenException("You don't have permission to edit projects.");
-		// }
+		if (AuthComponent::user('role') != 'admin') {
+			//throw new ForbiddenException("You can't perform that action.");
+			CakeLog::info('The user '.AuthComponent::user('username').' (ID: '.AuthComponent::user('id').') tried to edit a project: (ID: '.$id.')','users');
+			$this->Session->setFlash(__('The project could not be edited.', 'flash_fail'));
+			$this->redirect(array('action' => 'index'));
+		}
 		if (!$this->Project->exists($id)) {
 			throw new NotFoundException(__('Invalid project'));
 		}
