@@ -1,4 +1,5 @@
 tmp/*
+[Cc}onfig.php
 [Cc]onfig/core.php
 [Cc]onfig/database.php
 [Cc]onfig/deploy.rb
