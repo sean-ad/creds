@@ -25,7 +25,7 @@ class User extends AppModel
         ),
       array(
         'rule' => 'isUnique',
-        'message' => 'This user already exists.'
+        'message' => 'This user already exists (1).'
         )
       ),
     'email' => array(
@@ -35,7 +35,7 @@ class User extends AppModel
         ),
       array(
         'rule' => 'isUnique',
-        'message' => 'This user already exists.'
+        'message' => 'This user already exists (2).'
         )
       ),
     'password' => array(
