@@ -10,7 +10,31 @@ class UsersController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('logout', 'change_password', 'remember_password', 'remember_password_step_2');
-		//$this->Auth->allow();
+		// $this->Auth->allow();
+	}
+
+	public function initUser() {
+		$user = $this->User;
+		// For now, swap user id as you run this to assign permissions
+		// You can run this many times without ill effects (no dups created)
+		// set $this->Auth->allow(); temporarily to get this to work
+		// Setup some default permissions:
+		// $user->id = '4';
+	 	$this->Acl->allow($user, 'controllers/Projects/index');
+		$this->Acl->allow($user, 'controllers/Projects/view');
+		$this->Acl->allow($user, 'controllers/ProjectItems/view');
+		$this->Acl->allow($user, 'controllers/Users/login');
+		$this->Acl->allow($user, 'controllers/Users/logout');
+		$this->Acl->allow($user, 'controllers/Users/view');
+		$this->Acl->allow($user, 'controllers/Users/edit');
+		$this->Acl->allow($user, 'controllers/Users/change_password');
+		$this->Acl->allow($user, 'controllers/Users/remember_password');
+		$this->Acl->allow($user, 'controllers/Users/remember_password_step_2');
+		$this->Acl->allow($user, 'controllers/Users/profile');
+
+	    // we add an exit to avoid an ugly "missing views" error message
+	    echo "all done";
+	    exit;
 	}
 
 	public function index() {

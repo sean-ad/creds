@@ -19,3 +19,8 @@
 		<li><?php echo $this->Html->link(__('New Username/Password'), array('controller' => 'project_items', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+<?php
+
+print_r($data);
+
+?>

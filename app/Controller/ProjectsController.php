@@ -19,6 +19,7 @@ class ProjectsController extends AppController {
 		parent::beforeFilter();
 		// turn off auth
 		//$this->Auth->allow();
+		$this->Auth->allow('initDB');
 	}
 
 /**
@@ -123,6 +124,21 @@ class ProjectsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Project.' . $this->Project->primaryKey => $id));
 			$this->request->data = $this->Project->find('first', $options);
+
+			/*
+
+			TODO:
+
+			make it easy to quickly assign users to a project
+			and see who is already assigned
+
+
+			 */
+			//print_r($this->request->data );
+			//data doesn't have enough info to know who has permissions
+			// have to interrogate the aros_acos table
+			// or use a built-in checker?
+
 		}
 	}
 
