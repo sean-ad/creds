@@ -13,33 +13,6 @@ class UsersController extends AppController {
 		//$this->Auth->allow();
 	}
 
-	public function initUser() {
-		$user = $this->User;
-		// For now, swap user id as you run this to assign permissions
-		// You can run this many times without ill effects (no dups created)
-		// set $this->Auth->allow(); temporarily to get this to work
-		// Setup some default permissions:
-		$user->id = '4';
-	 	$this->Acl->allow($user, 'controllers/Projects/index');
-		$this->Acl->allow($user, 'controllers/Projects/view');
-		$this->Acl->allow($user, 'controllers/ProjectItems/view');
-		$this->Acl->allow($user, 'controllers/Users/login');
-		$this->Acl->allow($user, 'controllers/Users/logout');
-		$this->Acl->allow($user, 'controllers/Users/view');
-		$this->Acl->allow($user, 'controllers/Users/edit');
-		$this->Acl->allow($user, 'controllers/Users/change_password');
-		$this->Acl->allow($user, 'controllers/Users/remember_password');
-		$this->Acl->allow($user, 'controllers/Users/remember_password_step_2');
-		$this->Acl->allow($user, 'controllers/Users/profile');
-
-		// If you like, assign a default project:
-		$this->Acl->allow($user, 'Green Project');
-
-	    // we add an exit to avoid an ugly "missing views" error message
-	    echo "all done";
-	    exit;
-	}
-
 	public function index() {
 		if (AuthComponent::user('role') != 'admin') {
 			throw new ForbiddenException("You don't have permission to do that.");
@@ -113,6 +86,18 @@ class UsersController extends AppController {
 					# Store log
 					CakeLog::info('The user '.AuthComponent::user('username').' (ID: '.AuthComponent::user('id').') registered user (ID: '.$this->User->id.')','users');
 				}
+				$user = $this->User;
+			 	$this->Acl->allow($user, 'controllers/Projects/index');
+				$this->Acl->allow($user, 'controllers/Projects/view');
+				$this->Acl->allow($user, 'controllers/ProjectItems/view');
+				$this->Acl->allow($user, 'controllers/Users/login');
+				$this->Acl->allow($user, 'controllers/Users/logout');
+				$this->Acl->allow($user, 'controllers/Users/view');
+				$this->Acl->allow($user, 'controllers/Users/edit');
+				$this->Acl->allow($user, 'controllers/Users/change_password');
+				$this->Acl->allow($user, 'controllers/Users/remember_password');
+				$this->Acl->allow($user, 'controllers/Users/remember_password_step_2');
+				$this->Acl->allow($user, 'controllers/Users/profile');
 				$this->Session->setFlash(__('The user has been saved'), 'flash_success');
 				$this->redirect('/home');
 			} else {

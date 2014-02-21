@@ -8,6 +8,12 @@ App::uses('AppController', 'Controller');
  */
 class ProjectsController extends AppController {
 
+public $actsAs = array('Acl' => array('type' => 'controlled'));
+
+public function parentNode() {
+    return null;
+}
+
 /**
  * Components
  *
@@ -19,7 +25,6 @@ class ProjectsController extends AppController {
 		parent::beforeFilter();
 		// turn off auth
 		//$this->Auth->allow();
-		$this->Auth->allow('initDB');
 	}
 
 /**
@@ -84,7 +89,7 @@ class ProjectsController extends AppController {
 
 /**
  * add method
- *
+ * TODO: add the correct node to the ACO table when adding a project
  * @return void
  */
 	public function add() {
