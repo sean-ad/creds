@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('AppController', 'Controller', 'Project', 'User');
 /**
  * Projects Controller
  *
@@ -89,7 +89,7 @@ public function parentNode() {
 
 /**
  * add method
- * TODO: add the correct node to the ACO table when adding a project
+ *
  * @return void
  */
 	public function add() {
@@ -100,6 +100,17 @@ public function parentNode() {
 			$this->Project->create();
 			if ($this->Project->save($this->request->data)) {
 				$this->Session->setFlash(__('The project has been saved.'));
+				// Set up the new project in the permissions table
+				$this->Acl->Aco->create(array(
+						'parent_id' => null,
+						'model' => 'Project',
+						'alias' => $this->request->data['Project']['name']
+					));
+				$this->Acl->Aco->save();
+				// Allow me to access the new project
+				$user = $this->User->find('first', array('id'=>AuthComponent::user('id')));
+			 	$this->Acl->allow($user, $this->request->data['Project']['name']);
+
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The project could not be saved. Please, try again.'));
