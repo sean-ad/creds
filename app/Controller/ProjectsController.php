@@ -44,7 +44,7 @@ public function parentNode() {
 		// $this->set('projects', $this->Paginator->paginate());
 		//
 		$this->Project->recursive = 0;
-		$projects = $this->Project->find('all');
+		$projects = $this->Project->find('all', array('order' => array('Project.name ASC')));
 		// we only want to display the allowed projects
 		$allowed_projects = array();
 		foreach ($projects as $project){
