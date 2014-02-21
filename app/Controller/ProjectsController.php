@@ -47,8 +47,14 @@ class ProjectsController extends AppController {
 				$allowed_projects[] = $project;
 			}
 		}
-		$this->set('projects', $allowed_projects);
+		// send differently depending on whether we were a requestAction or a regular controller call
+        	if ($this->request->is('requested')) {
+           	 return $allowed_projects;
+        	} else {
+			$this->set('projects', $allowed_projects);
+		}
 	}
+
 
 /**
  * view method

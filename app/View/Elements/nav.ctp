@@ -19,6 +19,7 @@
 		<?php if(AuthComponent::user('id')){?>
 			<ul class="nav navbar-nav side-nav">
 				<li class="<?php echo $this->params->params['controller'] == 'pages' ? 'active' : ''?>"><a href="<?php echo $this->params->webroot?>home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+
 				<?php if (AuthComponent::user('role') == 'admin') {?>
 				<li class="dropdown <?php echo $this->params->params['controller'] == 'users' ? 'active' : ''?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Users <b
@@ -28,13 +29,13 @@
 						<li><a href="<?php echo $this->params->webroot?>users/add"><i class="fa fa-plus"></i> Register new user</a></li>
 					</ul>
 				</li>
-				<?php } ?>
-
 				<li class="dropdown <?php echo $this->params->params['controller'] == 'users' ? 'active' : ''?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Projects <b
 							class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo $this->params->webroot?>projects"><i class="fa fa-list"></i> List</a></li>
+				<?php } ?>
+
 						<?php if (AuthComponent::user('role') == 'admin') {?>
 							<li><a href="<?php echo $this->params->webroot?>projects/add"><i class="fa fa-plus"></i> Add new Project</a></li>
 						<?php } ?>
