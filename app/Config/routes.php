@@ -40,6 +40,8 @@
 
 	Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));
 
+	Router::connect('/credentials/:action/*', array('controller' => 'project_items'));
+
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
