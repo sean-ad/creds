@@ -39,12 +39,9 @@ class User extends AppModel
         )
       ),
     'password' => array(
-      'required' => array(
-        'rule' => array('notEmpty'),
-        'message' => 'A password is required',
-        'on' => 'create'
-        )
-      ),
+        'rule'    => '$\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$',
+        'message' => 'Requires at least 8 characters in a mix of upper & lowercase, special characters, & numbers'
+    ),
     'role' => array(
       'valid' => array(
         'rule' => array('inList', array('admin', 'author')),
@@ -53,6 +50,12 @@ class User extends AppModel
         )
       )
     );
+
+  public function valid_pass($candidate) {
+      if (!preg_match_all('$\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$', $candidate))
+          return FALSE;
+      return TRUE;
+  }
 
   public function generateHashChangePassword()
   {
