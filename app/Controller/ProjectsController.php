@@ -83,6 +83,9 @@ public function parentNode() {
 			$this->Session->setFlash(__('The project could not be viewed.', 'flash_fail'));
 			$this->redirect(array('action' => 'index'));
 		} else {
+			// This is a test of how we call a custom method - to be eventually used when we want to check access to a certain project
+			$access = $this->Project->find('hasaccess', array('1'=>'a'));
+			//
 			$this->set('project', $project);
 		}
 	}

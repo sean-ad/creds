@@ -1,3 +1,4 @@
+<?php //print_r ($project['User']);?>
 <?php
 $breadcrumb = array(
 	array(
@@ -11,7 +12,15 @@ $breadcrumb = array(
 echo $this->element('breadcrumb',array('links' => $breadcrumb));
 ?>
 
-<h3><?php echo h($project['Project']['name']); ?></h3>
+<div class="row">
+  <div class="col-lg-10"><h3><?php echo __($project['Project']['name'])?></h3></div>
+  <div class="col-lg-2">
+  	<?php if (AuthComponent::user('role') == 'admin') {?>
+    <?php echo $this->Html->link(__('Add Credentials'),'/credentials/add/project:' . $project['Project']['id'],array('class' => 'btn btn-default pull-right','style' => 'margin-top: 15px')) ?>
+    <?php } ?>
+  </div>
+</div>
+
 <hr>
 
 <div class="related">
@@ -57,4 +66,6 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 <?php echo $project['Project']['notes']; ?>
 </div>
 <?php endif; ?>
+
+
 

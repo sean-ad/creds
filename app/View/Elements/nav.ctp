@@ -26,7 +26,7 @@
 							class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo $this->params->webroot?>users"><i class="fa fa-list"></i> List</a></li>
-						<li><a href="<?php echo $this->params->webroot?>users/add"><i class="fa fa-plus"></i> Register new user</a></li>
+						<li><a href="<?php echo $this->params->webroot?>users/add"><i class="fa fa-plus"></i> Add new user</a></li>
 					</ul>
 				</li>
 				<li class="dropdown <?php echo $this->params->params['controller'] == 'users' ? 'active' : ''?>">

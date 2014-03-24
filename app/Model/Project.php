@@ -15,7 +15,7 @@ class Project extends AppModel {
  */
 	public $displayField = 'name';
 	// to integrate with acl checks on projects
-	public $findMethods = array('available' =>  true);
+	public $findMethods = array('available' =>  true, 'hasaccess'=>true);
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -40,4 +40,20 @@ class Project extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+
+
+
+protected function _findHasAccess($state, $query, $results = array()) {
+    if ($state === 'before') {
+    	// change query conditions if you need to before it runs
+        return $query;
+        }
+        $query['joins'] = array(
+            //array of required joins
+        );
+        return $results;
+    }
+
+
+
 }

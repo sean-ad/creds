@@ -77,8 +77,15 @@ class ProjectItemsController extends AppController {
 				$this->Session->setFlash(__('The project item could not be saved. Please, try again.'));
 			}
 		}
-		$projects = $this->ProjectItem->Project->find('list');
-		$this->set(compact('projects'));
+		/*
+		Retrieve the  desired project ID from the referring page in the URL
+		$this->params['named']['project']['id']  passed as /credentials/add/project:n/
+		Then inject this into a hidden field on the form and remove the selectior from the form
+		 */
+		// $projects = $this->ProjectItem->Project->find('list');
+		$parent_project = $this->params['named']['project'];
+		$project = $this->ProjectItem->Project->findById($this->params['named']['project']);
+		$this->set(compact('project'));
 	}
 
 /**

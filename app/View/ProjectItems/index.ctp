@@ -1,5 +1,5 @@
 <div class="projectItems index">
-	<h2><?php echo __('Project Items'); ?></h2>
+	<h2><?php echo __('Credentials'); ?></h2>
 	<div class='row'>
 		<div class="col-12">
 			<table class='table table-bordered'>
