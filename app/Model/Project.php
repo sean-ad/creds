@@ -44,6 +44,7 @@ class Project extends AppModel {
 
 
 protected function _findHasAccess($state, $query, $results = array()) {
+   //if (!($this->Acl->check(array('User' => array('id' => $this->Auth->user('id'))), $projectItem['Project']['name'], 'read'))){ }
     if ($state === 'before') {
     	// change query conditions if you need to before it runs
         return $query;

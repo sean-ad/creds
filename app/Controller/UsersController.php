@@ -2,6 +2,7 @@
 class UsersController extends AppController {
 
 	public $actsAs = array('Acl' => array('type' => 'requester'));
+	public $uses = array('User', 'Project');
 
 	public function parentNode() {
 	    return null;
@@ -74,6 +75,18 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		$this->set('user', $user);
+		// Loop through our projects to see what they have access too
+		// This is similar to what we do on the projects Index page
+		// TODO: Turn this into a reusable method
+		$this->Project->recursive = 0;
+		$projects = $this->Project->find('all', array('order' => array('Project.name ASC')));
+		$allowed_projects = array();
+		foreach ($projects as $project){
+			if ($this->Acl->check(array('User' => array('id' => $this->User->id)), $project['Project']['name'], 'read')){
+				$allowed_projects[] = $project;
+			}
+		}
+		$this->set('projects', $allowed_projects);
 	}
 
 

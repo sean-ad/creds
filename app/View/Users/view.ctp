@@ -23,3 +23,15 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 	<strong>Role: </strong><?php echo $user['role'] ?>
   </div>
 </div>
+
+<?php if (AuthComponent::user('role') == 'admin') {?>
+    <hr />
+    <h4><?php echo $user['username'] . ' has access to these projects: ';?></h4>
+        <?php if (!empty($projects)):?>
+        <ul>
+        <?php foreach ($projects as $project) :?>
+            <li><?php echo $project['Project']['name'] ?></li>
+        <?php endforeach;?>
+        </ul>
+    <?php endif;?>
+<?php } ?>

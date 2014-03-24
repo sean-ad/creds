@@ -9,6 +9,7 @@ App::uses('AppController', 'Controller', 'Project', 'User');
 class ProjectsController extends AppController {
 
 public $actsAs = array('Acl' => array('type' => 'controlled'));
+public $uses = array('Project', 'User');
 
 public function parentNode() {
     return null;
@@ -84,9 +85,17 @@ public function parentNode() {
 			$this->redirect(array('action' => 'index'));
 		} else {
 			// This is a test of how we call a custom method - to be eventually used when we want to check access to a certain project
-			$access = $this->Project->find('hasaccess', array('1'=>'a'));
-			//
+			//$access = $this->Project->find('hasaccess', array('1'=>'a'));
 			$this->set('project', $project);
+			// For now, enumerate the users with access to this project by looping (See /projects/index and /users/view also)
+			$users = $this->User->find('all', array('order' => array('User.username ASC')));
+			$allowed_users = array();
+			foreach ($users as $user){
+				if ($this->Acl->check(array('User' => array('id' => $user['User']['id'])), $project['Project']['name'], 'read')){
+					$allowed_users[] = $user;
+				}
+			}
+			$this->set('users', $allowed_users);
 		}
 	}
 

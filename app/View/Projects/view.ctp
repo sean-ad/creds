@@ -67,5 +67,15 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 </div>
 <?php endif; ?>
 
-
+<?php if (AuthComponent::user('role') == 'admin') {?>
+	<hr />
+	<?php if (!empty($users)):?>
+		<h4><?php echo  ' Users with access to this project: ';?></h4>
+		<ul>
+		<?php foreach ($users as $user) :?>
+			<li><?php echo $user['User']['username'] ?></li>
+		<?php endforeach;?>
+		</ul>
+	<?php endif;?>
+<?php }?>
 
