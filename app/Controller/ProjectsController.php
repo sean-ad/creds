@@ -119,9 +119,12 @@ public function parentNode() {
 						'alias' => $this->request->data['Project']['name']
 					));
 				$this->Acl->Aco->save();
-				// Allow me to access the new project
-				$user = $this->User->find('first', array('id'=>AuthComponent::user('id')));
-			 	$this->Acl->allow($user, $this->request->data['Project']['name']);
+				// Allow all admins to access this new project
+				// TODO: Make this work retroactively and be removable
+				$users = $this->User->find('all', array('conditions'=> array('role'=>'admin')));
+			 	foreach ($users as $user){
+			 		$this->Acl->allow($user, $this->request->data['Project']['name']);
+			 	}
 
 				return $this->redirect(array('action' => 'index'));
 			} else {
