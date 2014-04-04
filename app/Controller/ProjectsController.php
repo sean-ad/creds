@@ -194,7 +194,7 @@ public function parentNode() {
 		if (!$this->Project->exists()) {
 			throw new NotFoundException(__('Invalid project'));
 		}
-		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('post', 'delete');
 		if ($this->Project->delete()) {
 			$this->Session->setFlash(__('The project has been deleted.'));
 		} else {

@@ -1,5 +1,5 @@
 /**
-* This script is automatically called when the user is in the controller 'users' and action 'home'
+* This script is automatically called when the user is in the controller 'projects' and action 'index'
 */
 ;(function() {
   var App,
@@ -12,21 +12,21 @@
     }
 
     App.prototype.initialize = function() {
-      // Allow to delete users using twitter bootstrap modal
-      this.deleteUserModal();
+      // Allow to delete projects using twitter bootstrap modal
+      this.deleteProjectModal();
     }
 
     // Delete users modal
-    App.prototype.deleteUserModal = function() {
+    App.prototype.deleteProjectModal = function() {
 
-      // Changes the URL to delete on each user click
+      // Changes the URL to delete on each project click
       $('.btn-remove-modal').bind('click',function(e) {
         var uid,name,href,pattern,$label,$link;
 
-        $label  = $('.label-uname');
-        $link   = $('.delete-user-link');
-        uid     = $(this).attr('data-uid');
-        name    = $(this).attr('data-uname');
+        $label  = $('.label-pname');
+        $link   = $('.delete-project-link');
+        uid     = $(this).attr('data-pid');
+        name    = $(this).attr('data-pname');
         href    = $link.attr('href');
         pattern = '#{uid}';
 
