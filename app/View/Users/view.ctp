@@ -26,15 +26,28 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 
 <?php if (AuthComponent::user('role') == 'admin') {?>
     <hr />
-    <h4><?php echo $user['username'] . ' has access to these projects: ';?></h4>
-        <?php if (!empty($projects)):?>
-        <ul>
-        <?php foreach ($projects as $project) :?>
-            <li><?php echo $project['Project']['name'] ?></li>
-        <?php endforeach;?>
-        </ul>
-    <?php endif;?>
-<?php } ?>
+    <div class="row">
+      <div class="col-lg-10"><h4><?php echo $user['username'] . ' has access to these projects: ';?></h4></div>
+      <div class="col-lg-2">
+      </div>
+    </div>
+            <?php if (!empty($projects)):?>
+              <div class='row'>
+                <div class="col-md-8">
+                  <table class='table table-bordered'>
+                    <tr>
+                      <th><?php echo __('Name'); ?></th>
+                      <th><?php echo __('Action'); ?></th>
+                    </tr>
+                      <?php foreach ($projects as $project) :?>
+                      <tr>
+                        <td><?php echo $project['Project']['name'] ?></td>
+                        <td><a href="/projects/permissions/<?php echo $project['Project']['id'] . '/' . $user['id'];?>/deny"> Remove</a></td>
+                      </tr>
+                    <?php endforeach; ?>
+                    </table>
+              </div>
+              </div>
+            <?php endif;?>
 
-<?php //debug($node);?>
-<?php //echo $this->element('sql_dump');?>
+<?php } ?>
