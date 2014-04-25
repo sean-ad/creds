@@ -86,11 +86,22 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 		  <div class="col-lg-2">
 		  </div>
 		</div>
-		<ul>
-		<?php foreach ($users as $user) :?>
-			<li><?php echo $user['User']['username'];?><a href="/projects/permissions/<?php echo $project['Project']['id'] . '/' . $user['User']['id'];?>/deny"> Remove</a></li>
-		<?php endforeach;?>
-		</ul>
+              <div class='row'>
+                <div class="col-md-8">
+                  <table class='table table-bordered'>
+                    <tr>
+                      <th><?php echo __('Name'); ?></th>
+                      <th><?php echo __('Action'); ?></th>
+                    </tr>
+                      <?php foreach ($users as $user) :?>
+                      <tr>
+                        <td><?php echo $user['User']['username']; ?></td>
+                        <td><a href="/projects/permissions/<?php echo $project['Project']['id'] . '/' . $user['User']['id'];?>/deny"> Remove</a></td>
+                      </tr>
+                    <?php endforeach; ?>
+                    </table>
+              </div>
+            </div>
 	<?php endif;?>
   <?php /* -----------------Users to add----------------------------------- */?>
       <?php if (!empty($disallowedusers)):?>
