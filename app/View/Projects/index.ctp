@@ -99,3 +99,4 @@
 </div><!-- /.modal -->
 
 <?php }  ?>
+<?php //echo $this->element('sql_dump');?>

@@ -50,7 +50,18 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 							<td class="actions">
 								<?php //echo $this->Html->link(__('Details'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
 								<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?>
-								<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'project_items', 'action' => 'delete', $projectItem['id']), null, __('Are you sure you want to delete # %s?', $projectItem['id'])); ?>
+								<?php //echo $this->Form->postLink(__('Delete'), array('controller' => 'project_items', 'action' => 'delete', $projectItem['id']), null, __('Are you sure you want to delete # %s?', $projectItem['id'])); ?>
+                                                    <?php echo $this->Html->link(
+                                                      __('Delete'),
+                                                      '#CredentialsModal',
+                                                      array(
+                                                        'class' => 'btn-remove-modal',
+                                                        'data-toggle' => 'modal',
+                                                        'role'  => 'button',
+                                                        'data-uid' => $projectItem['id'],
+                                                        'data-uname' => $projectItem['name']
+                                                      ));
+                                                    ?>
 							</td>
 						<?php } ?>
 					</tr>
@@ -73,54 +84,59 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 		<div class="row">
 		  <div class="col-lg-10"><h4><?php echo  ' Users with access to this project: ';?></h4></div>
 		  <div class="col-lg-2">
-		  	<?php if (AuthComponent::user('role') == 'admin') {?>
-		    <?php //echo $this->Html->link(__('Assign Permissions'),'/xx/yy/zz:' . $project['Project']['id'],array('class' => 'btn btn-default pull-right','style' => 'margin-top: 15px')) ?>
-	            <?php echo $this->Html->link(
-	              __('Assign Permissions'),
-	              '#assignPermissionsModal',
-	              array(
-	                'class' => 'btn-remove-modal btn btn-default pull-right','style' => 'margin-top: 15px',
-	                'data-toggle' => 'modal',
-	                'role'  => 'button',
-	                'data-pid' => $project['Project']['id'],
-	                'data-pname' => $project['Project']['name']
-	              ));
-	            ?>
-		    <?php } ?>
 		  </div>
 		</div>
 		<ul>
 		<?php foreach ($users as $user) :?>
-			<li><?php echo $user['User']['username'] ?></li>
+			<li><?php echo $user['User']['username'];?><a href="/projects/permissions/<?php echo $project['Project']['id'] . '/' . $user['User']['id'];?>/deny"> Remove</a></li>
 		<?php endforeach;?>
 		</ul>
 	<?php endif;?>
+  <?php /* -----------------Users to add----------------------------------- */?>
+      <?php if (!empty($disallowedusers)):?>
+      <hr />
+      <div class="row">
+        <div class="col-lg-10"><h4><?php echo  ' Users without access: ';?></h4></div>
+      </div>
+      <?php echo $this->Form->create('Project', array('type' => 'post', 'action'=>array('controller'=>'projects'), 'action'=>'permissions', 'default'=>true));?>
+      <?php echo $this->Form->input('id', array('value'=>$project['Project']['id'])); ?>
+      <?php foreach ($disallowedusers as $disalloweduser) :?>
+        <!-- <li><?php //echo $disalloweduser['User']['username'] ?></li> -->
+      <?php //echo $this->Form->input('users_to_allow', array('type'=>'checkbox', 'name' =>'data[Project][users_to_allow][]', 'label'=> $disalloweduser['User']['username'], 'value'=>$disalloweduser['User']['id'], 'div'=>'checkbox', 'class' => 'checkbox'));  ?>
+      <div class="checkbox ">
+        <label>
+        <input type="checkbox" name="data[Project][users_to_allow][]" value="<?php echo $disalloweduser['User']['id'];?>">
+          <?php echo $disalloweduser['User']['username'];?>
+        </label>
+      </div>
+      <?php endforeach;?>
+      <p>&nbsp; </p>
+      <?php echo $this->Form->end('Grant Access'); ?>
+
+    <?php endif;?>
+  <?php /* ---------------------------------------------------- */?>
 </div>
 <?php }?>
 
 <?php if (AuthComponent::user('role') == 'admin') {?>
 
-<div class="modal fade" id="assignPermissionsModal">
+<div class="modal fade" id="CredentialsModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 id="myModalLabel"><?php echo __('Do Something') ?></h4>
+        <h4 id="myModalLabel"><?php echo __('Remove Credentials') ?></h4>
       </div>
       <div class="modal-body">
-        <p><?php echo __('Are you sure you want to assign permissions to  ') ?><span class="label-pname strong"></span> ?</p>
-
-
-        In here should be a set of form fields with all users, and checkboxes to indicate who is already assigned.  <br />
-        On click, the users are added and/or removed, and the view page is refreshed
-
+        <p><?php echo __('Are you sure you want to remove the credentials ') ?><span class="label-uname strong"></span> ?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __('Cancel') ?></button>
-        <?php echo $this->Html->link(__('Delete'),'/xxx/zzz/#{uid}',array('class' => 'btn btn-danger delete-project-link')) ?>
+        <?php echo $this->Html->link(__('Delete'),'/project_items/delete/#{uid}',array('class' => 'btn btn-danger delete-user-link')) ?>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <?php }  ?>
+<?php //echo $this->element('sql_dump');?>

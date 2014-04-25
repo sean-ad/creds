@@ -8,6 +8,8 @@ class UsersController extends AppController {
 	    return null;
 	}
 
+	public $components = array('RequestHandler');
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('logout', 'change_password', 'remember_password', 'remember_password_step_2');

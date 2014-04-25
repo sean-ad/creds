@@ -35,3 +35,6 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
         </ul>
     <?php endif;?>
 <?php } ?>
+
+<?php //debug($node);?>
+<?php //echo $this->element('sql_dump');?>

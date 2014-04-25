@@ -20,7 +20,7 @@ public function parentNode() {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Acl');
+	public $components = array('Paginator', 'Acl', 'RequestHandler');
 
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -84,18 +84,22 @@ public function parentNode() {
 			$this->Session->setFlash(__('The project could not be viewed.', 'flash_fail'));
 			$this->redirect(array('action' => 'index'));
 		} else {
-			// This is a test of how we call a custom method - to be eventually used when we want to check access to a certain project
+			// This is a test of how we call a custom find method - to be eventually used when we want to check access to a certain project
 			//$access = $this->Project->find('hasaccess', array('1'=>'a'));
 			$this->set('project', $project);
 			// For now, enumerate the users with access to this project by looping (See /projects/index and /users/view also)
 			$users = $this->User->find('all', array('order' => array('User.username ASC')));
 			$allowed_users = array();
+			$disallowed_users = array();
 			foreach ($users as $user){
 				if ($this->Acl->check(array('User' => array('id' => $user['User']['id'])), $project['Project']['name'], 'read')){
 					$allowed_users[] = $user;
+				} else {
+					$disallowed_users[] = $user;
 				}
 			}
 			$this->set('users', $allowed_users);
+			$this->set('disallowedusers', $disallowed_users);
 		}
 	}
 
@@ -161,21 +165,6 @@ public function parentNode() {
 		} else {
 			$options = array('conditions' => array('Project.' . $this->Project->primaryKey => $id));
 			$this->request->data = $this->Project->find('first', $options);
-
-			/*
-
-			TODO:
-
-			make it easy to quickly assign users to a project
-			and see who is already assigned
-
-
-			 */
-			//print_r($this->request->data );
-			//data doesn't have enough info to know who has permissions
-			// have to interrogate the aros_acos table
-			// or use a built-in checker?
-
 		}
 	}
 
@@ -201,4 +190,61 @@ public function parentNode() {
 			$this->Session->setFlash(__('The project could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+/**
+ * permissions method
+ *
+ * @throws NotFoundException
+ * @param int $projectid, int userId, string permission
+ * @return void
+ */
+	public function permissions($projectid = null, $userId = null, $permission = 'allow') {
+		if (AuthComponent::user('role') != 'admin') {
+			throw new ForbiddenException("You don't have permission to do that");
+		}
+		if($permission!='allow' && $permission !='deny') {
+			throw new ForbiddenException("Invalid parameter");
+		}
+		// One-off grants and denys
+		if ( (!empty($projectid)) && (!empty($userId)) ){
+			$user = $this->User->findById($userId);
+			$this->User->id = $user['User']['id'];
+			$project = $this->Project->findById($projectid);
+			if($this->Acl->$permission($this->User, $project['Project']['name'])) {
+				CakeLog::info(AuthComponent::user('username') . ' changed permissions for Project: ' . $project['Project']['name'] . ': ' . $this->user['username'] . ', ' . $permission);
+					$this->Session->setFlash(__('Permissions applied'), 'flash_success');
+					$this->redirect($this->referer());
+			}
+		} else {
+			// a group of users to grant all at once
+			if ($this->request->is('post') && !empty($this->data['Project']['users_to_allow'])){
+				foreach ($this->data['Project']['users_to_allow'] as $newuser){
+					if (!empty($newuser)){
+						$user = $this->User->findById($newuser);
+						$this->User->id = $user['User']['id'];
+						$project = $this->Project->findById($this->data['Project']['id']);
+						if($this->Acl->$permission($this->User, $project['Project']['name'])) {
+							CakeLog::info(AuthComponent::user('username') . ' changed permissions for Project: ' . $project['Project']['name'] . ': ' . $user['User']['username'] . ', ' . $permission);
+						}
+					}
+				}
+				/* TODO: Catch errors where one element of the array fails : wrap in a transaction?*/
+				$this->Session->setFlash(__('Permissions applied'), 'flash_success');
+				$this->redirect($this->referer());
+			}
+		}
+	}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
