@@ -142,8 +142,8 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
         <p><?php echo __('Are you sure you want to remove the credentials ') ?><span class="label-uname strong"></span> ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __('Cancel') ?></button>
-        <?php echo $this->Html->link(__('Delete'),'/project_items/delete/#{uid}',array('class' => 'btn btn-danger delete-user-link')) ?>
+        <button type="button" class="btn btn-default " data-dismiss="modal"><?php echo __('Cancel') ?></button>
+        <?php echo $this->Html->link(__('Delete'),'/project_items/delete/#{uid}',array('class' => 'btn btn-danger delete-credentials-link')) ?>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
