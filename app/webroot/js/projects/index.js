@@ -1,5 +1,5 @@
 /**
-* This script is automatically called when the user is in the controller 'projects' and action 'index'
+*
 */
 ;(function() {
   var App,
@@ -14,6 +14,15 @@
     App.prototype.initialize = function() {
       // Allow to delete projects using twitter bootstrap modal
       this.deleteProjectModal();
+
+      // Store the original lplaceholder deletion link
+      var _del_placeholder = $('.delete-project-link').attr('href');
+
+      // Replace the link with the placeholder if they cancel the delete action
+      $('#ProjectsModal').on('hidden.bs.modal', function () {
+        $('.delete-project-link').attr('href', _del_placeholder);
+      });
+
     }
 
     // Delete users modal

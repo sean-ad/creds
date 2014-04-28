@@ -14,6 +14,15 @@
     App.prototype.initialize = function() {
       // Allow to delete users using twitter bootstrap modal
       this.deleteUserModal();
+
+      // Store the original lplaceholder deletion link
+      var _del_placeholder = $('.delete-user-link').attr('href');
+
+      // Replace the link with the placeholder if they cancel the delete action
+      $('#UsersModal').on('hidden.bs.modal', function () {
+        $('.delete-user-link').attr('href', _del_placeholder);
+      });
+
     }
 
     // Delete users modal

@@ -1,5 +1,5 @@
 /**
-* This script is automatically called when the user is in the controller 'users' and action 'home'
+*
 */
 ;(function() {
   var App,
