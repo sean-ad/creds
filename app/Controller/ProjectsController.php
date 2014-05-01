@@ -149,14 +149,17 @@ public function parentNode() {
 		if (AuthComponent::user('role') != 'admin') {
 			//throw new ForbiddenException("You can't perform that action.");
 			CakeLog::info('The user '.AuthComponent::user('username').' (ID: '.AuthComponent::user('id').') tried to edit a project: (ID: '.$id.')','users');
-			$this->Session->setFlash(__('The project could not be edited.', 'flash_fail'));
+			$this->Session->setFlash(__('The project could not be edited.'), 'flash_fail');
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!$this->Project->exists($id)) {
 			throw new NotFoundException(__('Invalid project'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+			$oldData = $this->Project->findById($id);
 			if ($this->Project->save($this->request->data)) {
+
+
 				$this->Session->setFlash(__('The project has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
