@@ -70,19 +70,15 @@ class ProjectItemsController extends AppController {
 		}
 		if ($this->request->is('post')) {
 			$this->ProjectItem->create();
+			$projectId = $this->request->data['ProjectItem']['project_id'];
 			if ($this->ProjectItem->save($this->request->data)) {
-				$this->Session->setFlash(__('The project item has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The project item has been saved.'), 'flash_success');
+				// return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller'=>'projects', 'action' => 'view', $projectId));
 			} else {
 				$this->Session->setFlash(__('The project item could not be saved. Please, try again.'));
 			}
 		}
-		/*
-		Retrieve the  desired project ID from the referring page in the URL
-		$this->params['named']['project']['id']  passed as /credentials/add/project:n/
-		Then inject this into a hidden field on the form and remove the selectior from the form
-		 */
-		// $projects = $this->ProjectItem->Project->find('list');
 		$parent_project = $this->params['named']['project'];
 		$project = $this->ProjectItem->Project->findById($this->params['named']['project']);
 		$this->set(compact('project'));
@@ -103,11 +99,12 @@ class ProjectItemsController extends AppController {
 			throw new NotFoundException(__('Invalid project item'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
+			$projectId = $this->data['ProjectItem']['project_id'];
 			if ($this->ProjectItem->save($this->request->data)) {
-				$this->Session->setFlash(__('The project item has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The project item has been saved.'),  'flash_success');
+				return $this->redirect(array('controller'=>'projects', 'action' => 'view', $projectId));
 			} else {
-				$this->Session->setFlash(__('The project item could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The project item could not be saved. Please, try again.'),  'flash_fail');
 			}
 		} else {
 			$options = array('conditions' => array('ProjectItem.' . $this->ProjectItem->primaryKey => $id));
@@ -132,11 +129,12 @@ class ProjectItemsController extends AppController {
 		if (!$this->ProjectItem->exists()) {
 			throw new NotFoundException(__('Invalid project item'));
 		}
-		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('post', 'delete');
 		if ($this->ProjectItem->delete()) {
-			$this->Session->setFlash(__('The project item has been deleted.'));
+			$this->Session->setFlash(__('The project item has been deleted.'), 'flash_success');
+			$this->redirect($this->referer());
 		} else {
-			$this->Session->setFlash(__('The project item could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The project item could not be deleted. Please, try again.'),  'flash_fail');
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

@@ -143,7 +143,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default " data-dismiss="modal"><?php echo __('Cancel') ?></button>
-        <?php echo $this->Html->link(__('Delete'),'/project_items/delete/#{uid}',array('class' => 'btn btn-danger delete-credentials-link')) ?>
+        <?php echo $this->Html->link(__('Delete'),'/credentials/delete/#{uid}',array('class' => 'btn btn-danger delete-credentials-link')) ?>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
