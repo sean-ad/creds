@@ -10,6 +10,3 @@
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
-<div class="alert alert-warning">
-        <strong>Warning!</strong> There's currently a bug when editing the project name.  After this step you'll see a permissions error.  To correct that, also change the project name in the ACOS table.
-      </div>
