@@ -105,7 +105,6 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 	<?php endif;?>
   <?php /* -----------------Users to add----------------------------------- */?>
       <?php if (!empty($disallowedusers)):?>
-      <hr />
       <div class="row">
         <div class="col-lg-10"><h4><?php echo  ' Users without access: ';?></h4></div>
       </div>
