@@ -158,8 +158,11 @@ public function parentNode() {
 		if ($this->request->is(array('post', 'put'))) {
 			$oldData = $this->Project->findById($id);
 			if ($this->Project->save($this->request->data)) {
-
-
+				//For some reason the Acl component doesn't monitor changes to the project name so we handle that here
+				$db = $this->Project->getDataSource();
+				$query = "UPDATE acos SET alias = ? WHERE model = 'Project' AND alias= ? ";
+				$result = $db->fetchAll($query, array($this->request->data['Project']['name'], $oldData['Project']['name']));
+				//
 				$this->Session->setFlash(__('The project has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
