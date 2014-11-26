@@ -71,6 +71,30 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 	</div>
 <?php endif; ?>
 
+
+<div class="row">
+    <div class="col-md-2">Name</div>
+    <div class="col-md-2">Username</div>
+    <div class="col-md-2">Password</div>
+    <div class="col-md-4">URL</div>
+    <div class="col-md-1">Notes</div>
+    <div class="col-md-1">Actions</div>
+</div>
+
+
+<div class="row">
+  <?php foreach ($project['ProjectItem'] as $projectItem): ?>
+    <div class="col-md-2"><?php echo $projectItem['name']; ?></div>
+    <div class="col-md-2"><?php echo $projectItem['username']; ?></div>
+    <div class="col-md-2"><?php echo $projectItem['password']; ?></div>
+    <div class="col-md-4"><?php echo $projectItem['url']; ?></div>
+    <div class="col-md-1"><?php if (!empty($projectItem['notes'])): ?><?php echo $this->Html->link(__('Note'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?><?php endif; ?></div>
+    <div class="col-md-1"><?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?></div>
+  <?php endforeach; ?>
+</div>
+
+
+
 <?php if (!empty($project['Project']['notes'])): ?>
 <div class="projects view">
 <h4>Notes:</h4>
