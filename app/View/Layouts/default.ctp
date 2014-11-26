@@ -17,6 +17,7 @@
 	<?php echo $this->Html->css(array('bootstrap.min', 'font-awesome/css/font-awesome.min', 'sb-admin', 'style')); ?>
 	<?php echo $this->CakeStrap->automaticCss(); ?>
 	<?php echo $this->Html->script('lib/modernizr') ?>
+
 </head>
 <body class="<?php echo $this->params->params['controller'].'_'.$this->params->params['action']?>">
 <!--[if lt IE 7]>
