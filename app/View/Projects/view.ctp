@@ -1,85 +1,4 @@
-<style>
 
-
-/*
-Generic Styling, for Desktops/Laptops
-*/
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-/* Zebra striping */
-tr:nth-of-type(odd) {
-  background: #eee;
-}
-th {
-  background: #333;
-  color: white;
-  font-weight: bold;
-}
-td, th {
-  padding: 6px;
-  border: 1px solid #ccc;
-  text-align: left;
-}
-
-
-/*
-Max width before this PARTICULAR table gets nasty
-This query will take effect for any screen smaller than 760px
-and also iPads specifically.
-*/
-@media
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-  /* Force table to not be like tables anymore */
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  tr { border: 1px solid #ccc; }
-
-  td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-  }
-
-  td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-  }
-
-  /*
-  Label the data
-  */
-
-  td:nth-of-type(1):before { content: "Name"; }
-  td:nth-of-type(2):before { content: "Username"; }
-  td:nth-of-type(3):before { content: "Password"; }
-  td:nth-of-type(4):before { content: "URLServer"; }
-  td:nth-of-type(5):before { content: "Details"; }
-  td:nth-of-type(6):before { content: "Actions"; }
-
-}
-
-</style>
 
 
 <?php //print_r ($project['User']);?>
@@ -111,13 +30,14 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 	<h4><?php echo __('Credentials:'); ?></h4>
 	<?php if (!empty($project['ProjectItem'])): ?>
 	<div class='row'>
-		<div class="col-12">
-			<!--<table class='table table-bordered'>-->
-                  <!--  Those classes interfere with our experimental approach to redoing the tables for mobile
-
+		<div class="col-12 table-responsive">
+			<table class='table table-bordered'>-
+      <!--  We need aun unstyled table for now
+                  Those classes interfere with our experimental approach to redoing the tables for mobile
+                          Technique described here:  http://css-tricks.com/responsive-data-tables/
                         There must be a way to do this in Bootstrap for mobile
                 -->
-                    <table>
+                    <!--<table>-->
 				<thead><tr>
 					<th><?php echo __('Name'); ?></th>
 					<th><?php echo __('Username'); ?></th>
