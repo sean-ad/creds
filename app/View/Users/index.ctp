@@ -24,10 +24,9 @@
         <?php foreach( $users as $user ){ ?>
         <tr>
           <td width="50px"><?php echo $user['User']['id'] ?></td>
-          <td><?php echo $user['User']['username'] ?></td>
+          <td><?php echo $this->Html->link($user['User']['username'] ,'/users/view/'.$user['User']['username']) ?></td>
           <td><?php echo $user['User']['role'] ?></td>
           <td width="150px">
-            <?php echo $this->Html->link(__('View'),'/users/view/'.$user['User']['username']) ?> |
             <?php echo $this->Html->link(__('Edit'),'/users/edit/'.$user['User']['id']) ?> |
             <?php echo $this->Html->link(
               __('Delete'),

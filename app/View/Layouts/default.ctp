@@ -25,8 +25,8 @@
 	experience this site.</p>
 <![endif]-->
 
-
-<div id="wrapper">
+<!--
+<div id="wrapper"> -->
 
 	<?php echo $this->element('nav')?>
 
@@ -37,8 +37,8 @@
 
 	</div>
 	<!-- /#page-wrapper -->
-
-</div>
+<!--
+</div>-->
 <!-- /#wrapper -->
 
 

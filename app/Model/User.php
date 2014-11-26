@@ -39,8 +39,8 @@ class User extends AppModel
         )
       ),
     'password' => array(
-        'rule'    => '$\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$',
-        'message' => 'Requires at least 8 characters in a mix of upper & lowercase, special characters, & numbers'
+        // 'rule'    => '$\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$',
+        // 'message' => 'Requires at least 8 characters in a mix of upper & lowercase, special characters, & numbers'
     ),
     'role' => array(
       'valid' => array(

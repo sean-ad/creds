@@ -20,16 +20,13 @@
 
 			<table class='table table-bordered'>
 			<tr>
-					<th><?php echo h('id'); ?></th>
 					<th><?php echo h('name'); ?></th>
 					<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			<?php foreach ($projects as $project): ?>
 			<tr>
-				<td><?php echo h($project['Project']['id']); ?>&nbsp;</td>
-				<td><?php echo h($project['Project']['name']); ?>&nbsp;</td>
+				<td><?php echo $this->Html->link($project['Project']['name'], array('action' => 'view', $project['Project']['id'])); ?>&nbsp;</td>
 				<td class="actions">
-					<?php echo $this->Html->link(__('View'), array('action' => 'view', $project['Project']['id'])); ?> |
 					<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $project['Project']['id'])); ?> |
 					<?php //echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $project['Project']['id']), null, __('Are you sure you want to delete # %s?', $project['Project']['id'])); ?>
 			            <?php echo $this->Html->link(
@@ -57,14 +54,10 @@
 <table class='table table-bordered'>
 			<tr>
 					<th><?php echo h('Name'); ?></th>
-					<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			<?php foreach ($projects as $project): ?>
 			<tr>
-				<td><?php echo h($project['Project']['name']); ?>&nbsp;</td>
-				<td class="actions">
-					<?php echo $this->Html->link(__('View'), array('action' => 'view', $project['Project']['id'])); ?>
-				</td>
+				<td><?php echo $this->Html->link($project['Project']['name'], array('action' => 'view', $project['Project']['id'])); ?>&nbsp;</td>
 			</tr>
 		<?php endforeach; ?>
 			</table>

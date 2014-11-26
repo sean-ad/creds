@@ -178,13 +178,21 @@ class AppController extends Controller
 			}
 
 			if (!$db->isConnected()) {
-        $this->redirect('/install');
+                      $this->redirect('/install');
 			}
 
 			$this->Cookie->write('Verify.connected',true);
 		}
 
 	}
+
+  protected function disallowed(){
+    /* TODO
+    Move disallowed_users snippet here so we can reuse it in Users
+    */
+  }
+
+
 }
 
 
