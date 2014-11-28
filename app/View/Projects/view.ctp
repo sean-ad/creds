@@ -28,16 +28,108 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 
 <div class="related">
 	<h4><?php echo __('Credentials:'); ?></h4>
+
 	<?php if (!empty($project['ProjectItem'])): ?>
 	<div class='row'>
-		<div class="col-12 table-responsive">
+
+
+
+<style>
+@media only screen and (max-width: 800px) {
+
+  /* Force table to not be like tables anymore */
+  #no-more-tables table,
+  #no-more-tables thead,
+  #no-more-tables tbody,
+  #no-more-tables th,
+  #no-more-tables td,
+  #no-more-tables tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #no-more-tables thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  #no-more-tables tr { border: 1px solid #ccc; }
+
+  #no-more-tables td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    white-space: normal;
+    text-align:left;
+  }
+
+  #no-more-tables td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+  }
+
+  /*
+  Label the data
+  */
+  #no-more-tables td:before { content: attr(data-title); }
+}
+</style>
+<!--
+<div id="no-more-tables">
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Company</th>
+      <th class="numeric">Price</th>
+      <th class="numeric">Change</th>
+      <th class="numeric">Change %</th>
+      <th class="numeric">Open</th>
+      <th class="numeric">High</th>
+      <th class="numeric">Low</th>
+      <th class="numeric">Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-title="Code">AAC</td>
+      <td data-title="Company">AUSTRALIAN AGRICULTURAL COMPANY LIMITED.</td>
+      <td data-title="Price" class="numeric">$1.38</td>
+      <td data-title="Change" class="numeric">-0.01</td>
+      <td data-title="Change %" class="numeric">-0.36%</td>
+      <td data-title="Open" class="numeric">$1.39</td>
+      <td data-title="High" class="numeric">$1.39</td>
+      <td data-title="Low" class="numeric">$1.38</td>
+      <td data-title="Volume" class="numeric">9,395</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+-->
+
+
+		<div class="col-12 table-responsive" id="no-more-tables">
 			<table class='table table-bordered'>-
-      <!--  We need aun unstyled table for now
-                  Those classes interfere with our experimental approach to redoing the tables for mobile
-                          Technique described here:  http://css-tricks.com/responsive-data-tables/
-                        There must be a way to do this in Bootstrap for mobile
+      <!--  Bootstrap's table-resposive works nicely, but we need to be able to select a single word
+              from an iPhone, so we need to get rid of tables altogether -
+              Either across the board, or only on mobile.
+              JQuery Mobile has a good approach:  http://view.jquerymobile.com/1.3.1/dist/demos/examples/tables/movie-list.html
+              ... or this one  http://elvery.net/demo/responsive-tables/#
+              ... see No More Tables (tested above, with data-title element in the TD)
+              ... and possibly Flip Scroll
                 -->
-                    <!--<table>-->
+                    <!-- <table> -->
 				<thead><tr>
 					<th><?php echo __('Name'); ?></th>
 					<th><?php echo __('Username'); ?></th>
@@ -52,13 +144,13 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
                           <tbody>
 				<?php foreach ($project['ProjectItem'] as $projectItem): ?>
 					<tr>
-						<td><?php echo $projectItem['name']; ?></td>
-						<td><?php echo $projectItem['username']; ?></td>
-						<td><?php echo $projectItem['password']; ?></td>
-						<td><?php echo $projectItem['url']; ?></td>
-						<td><?php if (!empty($projectItem['notes'])): ?><?php echo $this->Html->link(__('Note'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?><?php endif; ?></td>
+						<td data-title="Name"><?php echo $projectItem['name']; ?></td>
+						<td data-title="Username"><?php echo $projectItem['username']; ?></td>
+						<td data-title="Password"><?php echo $projectItem['password']; ?></td>
+						<td data-title="URL"><?php echo $projectItem['url']; ?></td>
+						<td data-title="Notes"<?php if (!empty($projectItem['notes'])): ?><?php echo $this->Html->link(__('Note'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?><?php endif; ?></td>
 						<?php if (AuthComponent::user('role') == 'admin') {?>
-							<td class="actions">
+							<td data-title="Actions" class="actions">
 								<?php //echo $this->Html->link(__('Details'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
 								<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?>
 								<?php //echo $this->Form->postLink(__('Delete'), array('controller' => 'project_items', 'action' => 'delete', $projectItem['id']), null, __('Are you sure you want to delete # %s?', $projectItem['id'])); ?>
