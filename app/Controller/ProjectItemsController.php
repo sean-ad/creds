@@ -101,10 +101,10 @@ class ProjectItemsController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			$projectId = $this->data['ProjectItem']['project_id'];
 			if ($this->ProjectItem->save($this->request->data)) {
-				$this->Session->setFlash(__('The project item has been saved.'),  'flash_success');
+				$this->Session->setFlash(__('The credentials have been saved.'),  'flash_success');
 				return $this->redirect(array('controller'=>'projects', 'action' => 'view', $projectId));
 			} else {
-				$this->Session->setFlash(__('The project item could not be saved. Please, try again.'),  'flash_fail');
+				$this->Session->setFlash(__('The credentials could not be saved. Please, try again.'),  'flash_fail');
 			}
 		} else {
 			$options = array('conditions' => array('ProjectItem.' . $this->ProjectItem->primaryKey => $id));
