@@ -54,7 +54,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
     left: -9999px;
   }
 
-  #no-more-tables tr { border: 1px solid #ccc; }
+  #no-more-tables tr { border: 1px solid #ccc; margin: 10px;}
 
   #no-more-tables td {
     /* Behave  like a "row" */
@@ -64,6 +64,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
     padding-left: 50%;
     white-space: normal;
     text-align:left;
+    min-height: 37px;
   }
 
   #no-more-tables td:before {
@@ -152,7 +153,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 						<?php if (AuthComponent::user('role') == 'admin') {?>
 							<td data-title="Actions" class="actions">
 								<?php //echo $this->Html->link(__('Details'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
-								<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?>
+								<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?> |
 								<?php //echo $this->Form->postLink(__('Delete'), array('controller' => 'project_items', 'action' => 'delete', $projectItem['id']), null, __('Are you sure you want to delete # %s?', $projectItem['id'])); ?>
                                                     <?php echo $this->Html->link(
                                                       __('Delete'),
