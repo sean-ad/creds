@@ -14,7 +14,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 
-	<?php echo $this->Html->css(array('bootstrap.min', 'font-awesome/css/font-awesome.min', 'sb-admin', 'style')); ?>
+	<?php echo $this->Html->css(array('bootstrap.min', 'font-awesome/css/font-awesome.min', 'sb-admin', 'style', 'mobile-no-more-tables.css')); ?>
 	<?php echo $this->CakeStrap->automaticCss(); ?>
 	<?php echo $this->Html->script('lib/modernizr') ?>
 
