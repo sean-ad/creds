@@ -34,6 +34,7 @@ remove the table formatting
     padding-left: 50%;
     white-space: normal;
     text-align:left;
+    min-height: 37px;
   }
 
   #no-more-tables td:before {

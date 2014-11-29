@@ -18,7 +18,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 <div class="row">
   <div class="col-lg-10"><h3><?php echo __($project['Project']['name'])?></h3></div>
   <div class="col-lg-2">
-  	<?php if (AuthComponent::user('role') == 'admin') {?>
+  	<?php if (AuthComponent::user('role') == ('admin' || 'author')) {?>
     <?php echo $this->Html->link(__('Add Credentials'),'/credentials/add/project:' . $project['Project']['id'],array('class' => 'btn btn-default pull-right','style' => 'margin-top: 15px')) ?>
     <?php } ?>
   </div>
@@ -39,7 +39,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 					<th><?php echo __('Password'); ?></th>
 					<th><?php echo __('Url/Server'); ?></th>
 					<th><?php echo __('Details'); ?></th>
-					<?php if (AuthComponent::user('role') == 'admin') {?>
+					<?php if (AuthComponent::user('role') == 'admin' || AuthComponent::user('role') == 'author') {?>
 						<th class="actions"><?php echo __('Actions'); ?></th>
 					<?php } ?>
 				</tr>
@@ -51,8 +51,10 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 						<td data-title="Username"><?php echo $projectItem['username']; ?></td>
 						<td data-title="Password"><?php echo $projectItem['password']; ?></td>
 						<td data-title="URL"><?php echo $projectItem['url']; ?></td>
-						<td data-title="Notes"<?php if (!empty($projectItem['notes'])): ?><?php echo $this->Html->link(__('Note'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?><?php endif; ?></td>
-						<?php if (AuthComponent::user('role') == 'admin') {?>
+						<td data-title="Notes"><?php if (!empty($projectItem['notes'])): ?>
+                                          <?php echo $this->Html->link(__('Note'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
+                                          <?php endif; ?></td>
+						<?php if (AuthComponent::user('role') == ('admin' ||  'author')) {?>
 							<td data-title="Actions" class="actions">
 								<?php //echo $this->Html->link(__('Details'), array('controller' => 'project_items', 'action' => 'view', $projectItem['id'])); ?>
 								<?php echo $this->Html->link(__('Edit'), array('controller' => 'project_items', 'action' => 'edit', $projectItem['id'])); ?> |

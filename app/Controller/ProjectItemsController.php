@@ -65,7 +65,7 @@ class ProjectItemsController extends AppController {
  * @return void
  */
 	public function add() {
-		if (AuthComponent::user('role') != 'admin') {
+		if (AuthComponent::user('role') != ('admin' || 'author')) {
 			throw new ForbiddenException("You don't have permission to do that.");
 		}
 		if ($this->request->is('post')) {
@@ -92,7 +92,7 @@ class ProjectItemsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (AuthComponent::user('role') != 'admin') {
+		if (AuthComponent::user('role') != ('admin' || 'author')) {
 			throw new ForbiddenException("You don't have permission to do that.");
 		}
 		if (!$this->ProjectItem->exists($id)) {
