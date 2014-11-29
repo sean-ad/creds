@@ -32,7 +32,7 @@ echo $this->element('breadcrumb',array('links' => $breadcrumb));
 	<?php if (!empty($project['ProjectItem'])): ?>
 	<div class='row'>
 		<div class="col-12 table-responsive" id="no-more-tables">
-			<table class='table table-bordered'>-
+			<table class='table table-bordered'>
 				<thead><tr>
 					<th><?php echo __('Name'); ?></th>
 					<th><?php echo __('Username'); ?></th>
