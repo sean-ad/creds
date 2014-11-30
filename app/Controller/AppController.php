@@ -192,6 +192,26 @@ class AppController extends Controller
     */
   }
 
+  /*
+  Send in your project id and the action you are checking permissions on.
+  This really belongs in the beforeSave action,
+  but Acl is only available from controllers as far as I can tell.
+   */
+  public function hasAccess($projectId = null, $action=null){
+    if (empty($projectId || $action)){
+      return false;
+    } else {
+      $options = array('conditions' => array('Project.id' => $projectId), 'recursive'=>0);
+      $p = new Project();
+      $project = $p->find('first', $options);
+      if($this->Acl->check(array('User' => array('id' => $this->Auth->user('id'))), $project['Project']['name'], $action)){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
 
 }
 

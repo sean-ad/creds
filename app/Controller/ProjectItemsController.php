@@ -92,14 +92,34 @@ class ProjectItemsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+
 		if (AuthComponent::user('role') != ('admin' || 'author')) {
 			throw new ForbiddenException("You don't have permission to do that.");
 		}
-		if (!$this->ProjectItem->exists($id)) {
+		if ($this->ProjectItem->exists($id)) {
+			// Check permissions
+			$options = array('conditions' => array('ProjectItem.' . $this->ProjectItem->primaryKey => $id));
+			$p= $this->ProjectItem->find('first', $options);
+			if(!$this->Acl->check(array('User' => array('id' => $this->Auth->user('id'))), $p['Project']['name'], 'update')){
+			 	throw new ForbiddenException("You don't have permission to do that.");
+			 }
+		} else {
 			throw new NotFoundException(__('Invalid project item'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			$projectId = $this->data['ProjectItem']['project_id'];
+			/*
+				TODO:
+				1.  Look up the Project from the ProjectItem id to prevent someone from passing in a different one
+				2.  Use the hasAccess function in App Controller to see if we can edit that Project, using
+				the id we looked up
+				//debug($testme = $this->hasAccess($projectId=1, $action='update'));
+				3.  Use the id we looked up in the $projectId variable above, for the redirect
+
+				Really wish we could put something into the beforeSave instead,
+				but Acl is only available from controllers as far as I can tell.
+			*/
+
 			if ($this->ProjectItem->save($this->request->data)) {
 				$this->Session->setFlash(__('The credentials have been saved.'),  'flash_success');
 				return $this->redirect(array('controller'=>'projects', 'action' => 'view', $projectId));

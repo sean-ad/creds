@@ -79,7 +79,7 @@ class UsersController extends AppController {
 		$this->set('user', $user);
 		// Loop through our projects to see what they have access too
 		// This is similar to what we do on the projects Index page
-		// TODO: Turn this into a reusable method
+		// TODO: Turn this into a reusable method and place in app controller
 		$this->Project->recursive = 0;
 		$projects = $this->Project->find('all', array('order' => array('Project.name ASC')));
 		$allowed_projects = array();
@@ -105,6 +105,8 @@ class UsersController extends AppController {
 			 	$this->Acl->allow($user, 'controllers/Projects/index');
 				$this->Acl->allow($user, 'controllers/Projects/view');
 				$this->Acl->allow($user, 'controllers/ProjectItems/view');
+				$this->Acl->allow($user, 'controllers/ProjectItems/add');
+				$this->Acl->allow($user, 'controllers/ProjectItems/edit');
 				$this->Acl->allow($user, 'controllers/Users/login');
 				$this->Acl->allow($user, 'controllers/Users/logout');
 				$this->Acl->allow($user, 'controllers/Users/view');
