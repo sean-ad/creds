@@ -33,7 +33,7 @@ class UsersController extends AppController {
 			} catch (Exception $e) {
 				# In case that this email doesn't exists in database
 				$this->Session->setFlash($e->getMessage(), 'flash_fail');
-				CakeLog::info('Invalid user tried to log in with ' .  $this->request->data['User']['email'] );
+				CakeLog::info('FAILED LOGIN: Invalid user tried to log in with ' .  $this->request->data['User']['email'] );
 				$this->redirect('/');
 			}
 
@@ -52,7 +52,7 @@ class UsersController extends AppController {
 				$this->redirect($this->Auth->redirectUrl('/projects/index'));
 			} else {
 				$this->Session->setFlash(__('Invalid username or password, try again'), 'flash_fail');
-				CakeLog::info('Login failed for ' .  $this->request->data['User']['email'] );
+				CakeLog::info('FAILED LOGIN: Login failed for ' .  $this->request->data['User']['email'] );
 			}
 		}
 	}
@@ -233,36 +233,43 @@ class UsersController extends AppController {
 	 */
 	public function remember_password() {
 		if ($this->request->is('post')) {
-			$user = $this->User->findByEmail($this->request->data['User']['email']);
 
-			if (empty($user)) {
-				$this->Session->setFlash('This email does not exist in our database.', 'flash_fail');
-				$this->redirect(array('action' => 'login'));
+			if ($user = $this->User->findByEmail($this->request->data['User']['email'])) {
+
+				if (empty($user)) {
+					$this->Session->setFlash('This email does not exist in our database.', 'flash_fail');
+					$this->redirect(array('action' => 'login'));
+				}
+
+				$hash = $this->User->generateHashChangePassword();
+
+				$data = array(
+					'User' => array(
+						'id' => $user['User']['id'],
+						'hash_change_password' => $hash
+					)
+				);
+
+				$this->User->save($data);
+
+				$email = new CakeEmail();
+				$email->template('remember_password', 'default')
+						->config('default')
+						->emailFormat('html')
+						->subject(__('Remember password - ' . Configure::read('Application.name')))
+						->to($user['User']['email'])
+						->from(Configure::read('Application.from_email'))
+						->viewVars(array('hash' => $hash))
+						->send();
+
+				$this->Session->setFlash('Check your e-mail for a password recovery link!', 'flash_success');
+				$this->set('submitted', TRUE);
+			} else {
+				// no valid user found
+				$this->set('submitted', FALSE);
+				$this->Session->setFlash(__('Invalid username or password, try again'), 'flash_fail');
+				CakeLog::info('FAILED LOGIN: Password change failed for ' .  $this->request->data['User']['email'] );
 			}
-
-			$hash = $this->User->generateHashChangePassword();
-
-			$data = array(
-				'User' => array(
-					'id' => $user['User']['id'],
-					'hash_change_password' => $hash
-				)
-			);
-
-			$this->User->save($data);
-
-			$email = new CakeEmail();
-			$email->template('remember_password', 'default')
-					->config('default')
-					->emailFormat('html')
-					->subject(__('Remember password - ' . Configure::read('Application.name')))
-					->to($user['User']['email'])
-					->from(Configure::read('Application.from_email'))
-					->viewVars(array('hash' => $hash))
-					->send();
-
-			$this->Session->setFlash('Check your e-mail for a password recovery link!', 'flash_success');
-			$this->set('submitted', TRUE);
 		} else {
 			$this->set('submitted', FALSE);
 		}
