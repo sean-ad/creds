@@ -31,8 +31,9 @@ class UsersController extends AppController {
 				# Retrieve user username for auth
 				$this->request->data['User']['username'] = $this->User->getUsername($this->request->data['User']['email']);
 			} catch (Exception $e) {
-				# In case that this email dont exists in database
+				# In case that this email doesn't exists in database
 				$this->Session->setFlash($e->getMessage(), 'flash_fail');
+				CakeLog::info('Invalid user tried to log in with ' .  $this->request->data['User']['email'] );
 				$this->redirect('/');
 			}
 
@@ -51,6 +52,7 @@ class UsersController extends AppController {
 				$this->redirect($this->Auth->redirectUrl('/projects/index'));
 			} else {
 				$this->Session->setFlash(__('Invalid username or password, try again'), 'flash_fail');
+				CakeLog::info('Login failed for ' .  $this->request->data['User']['email'] );
 			}
 		}
 	}
