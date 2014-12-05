@@ -32,7 +32,7 @@ class Project extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
+			'order' => 'ProjectItem.name ASC',
 			'limit' => '',
 			'offset' => '',
 			'exclusive' => '',
