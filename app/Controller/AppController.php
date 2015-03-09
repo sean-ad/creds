@@ -198,7 +198,10 @@ class AppController extends Controller
   but Acl is only available from controllers as far as I can tell.
    */
   public function hasAccess($projectId = null, $action=null){
-    if (empty($projectId || $action)){
+    //if (empty($projectId) || empty($action)){
+    if (empty($projectId)){
+      return false;
+    } else if (empty($action)){
       return false;
     } else {
       $options = array('conditions' => array('Project.id' => $projectId), 'recursive'=>0);
